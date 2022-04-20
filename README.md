@@ -31,3 +31,6 @@ It returns a dictionary having list of all instances in every region. It also pr
 
 ## Usage of function
 This function can be configured with 'enabled function url' to have http endpoint assigned to it. By this, it will act as an independent microservice without needing API gateway.
+
+### Architecture Diagram
+![alt text](https://embed.creately.com/MNmlm5hwWPC?token=kDeKrHzIIeg5WdOw&type=svg)
