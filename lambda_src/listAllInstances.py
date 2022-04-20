@@ -2,6 +2,7 @@ import boto3
 
 def lambda_handler(event, context):
     ec2_regions        = []
+    ec2_list           = {}
     boto3_client       = boto3.client('ec2')
     
     # getting list of all regions
@@ -13,6 +14,12 @@ def lambda_handler(event, context):
         conn           = boto3.resource('ec2', region_name=region)
         instances      = conn.instances.filter()
         
-        print("\n listing ec2 instances in ", region, "..")
+        print("listing ec2 instances in ", region, "..")
+        instances_in_region = []
         for instance in instances:
             print(instance.id)
+            instances_in_region.append(instance.id)
+
+        ec2_list[region] = instances_in_region
+    
+    return ec2_list
