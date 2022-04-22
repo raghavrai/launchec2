@@ -27,7 +27,10 @@ terraform apply
 ## About lambda function
 This function is written in Python and uses boto3 library for creating the client and fetching ec2 information.  
 
-It returns a dictionary having list of all instances in every region. It also prints this information during execution of function one by one per region.
+It returns a dictionary having status and list of all instances in every region. It also prints this information during execution of function one by one per region.
 
 ## Usage of function
 This function can be configured with 'enabled function url' to have http endpoint assigned to it. By this, it will act as an independent microservice without needing API gateway.
+
+### Architecture Diagram
+![alt text](https://embed.creately.com/MNmlm5hwWPC?token=kDeKrHzIIeg5WdOw&type=svg)
