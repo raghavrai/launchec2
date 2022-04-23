@@ -1,0 +1,52 @@
+# trigger sources of the pipeline
+trigger:
+  batch: "true"
+  branches:
+    include:
+    - master
+    - feature/*
+    - wip/*
+    - hotfix/*
+
+# agent pool to be used
+pool:
+  vmImage: ubuntu-latest
+
+# stages for different environments
+stages:
+  - stage: dev
+    jobs:
+      - deployment: Deployment_Job
+        continueOnError: false
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: LambdaDeployFunction@1
+                  inputs:
+                    awsCredentials: 'aws-service-connection-dev'
+                    regionName: 'us-east-1'
+                    deploymentMode: 'codeandconfiguration'
+                    functionName: 'listAllInstances'
+                    functionHandler: 'lambda_handler'
+                    runtime: 'python3.8'
+                    codeLocation: '../lambda_src/listAllInstances.zip'
+                    roleARN: 'arn:aws:iam::86345386525:role/service-role/queryEC2Instances-role-zzx1rn42'
+  - stage: qa
+    jobs:
+  - deployment: Deployment_Job
+    continueOnError: false
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+            - task: LambdaDeployFunction@1
+              inputs:
+                awsCredentials: 'aws-service-connection-qa'
+                regionName: 'us-east-1'
+                deploymentMode: 'codeandconfiguration'
+                functionName: 'listAllInstances'
+                functionHandler: 'lambda_handler'
+                runtime: 'python3.8'
+                codeLocation: '../lambda_src/listAllInstances.zip'
+                roleARN: 'arn:aws:iam::86675386157:role/service-role/queryEC2Instances-role-zzx1rn42'
